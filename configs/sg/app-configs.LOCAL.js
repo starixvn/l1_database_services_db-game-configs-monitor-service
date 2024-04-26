@@ -1,6 +1,6 @@
 import { name, version } from "./metadata.js";
 
-export const environment = "SG-LOCAL";
+export const environment = "SG-LOCAL-0";
 export const healthcheckPort = 5000;
 
 export const sentrySeverityLevel = "warning";
