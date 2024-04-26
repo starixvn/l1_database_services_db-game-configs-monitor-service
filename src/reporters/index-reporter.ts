@@ -1,6 +1,7 @@
 import type { BaseLogger } from "@ldb/base-logger";
 import { IndexDeployer, IndexDeployEvents } from "../deployers/index-deployer.js";
 import { Subsciber } from "../modules/subscriber.js";
+import { WAIT_TO_REPORT } from "./constants.js";
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const formatMap = (list: Map<string, Set<string>>) => {
@@ -54,7 +55,7 @@ export class IndexReporter extends Subsciber<keyof IndexDeployEvents, IndexDeplo
         }
 
         this.waiting = true;
-        await wait(60_000);
+        await wait(WAIT_TO_REPORT);
         this.waiting = false;
 
         if (this.sending || this.indexes.size === 0) {

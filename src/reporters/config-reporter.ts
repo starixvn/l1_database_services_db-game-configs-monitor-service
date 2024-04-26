@@ -2,6 +2,7 @@ import type { BaseLogger } from "@ldb/base-logger";
 import type { Document } from "@ldb/mongo";
 import type { ConfigDeployer, ConfigDeployEvents } from "../deployers/config-deployer.js";
 import { Subsciber } from "../modules/subscriber.js";
+import { WAIT_TO_REPORT } from "./constants.js";
 
 type Result = { upsertedCount: number; modifiedCount: number };
 
@@ -57,7 +58,7 @@ export class ConfigReporter extends Subsciber<keyof ConfigDeployEvents, ConfigDe
         }
 
         this.waiting = true;
-        await wait(60_000);
+        await wait(WAIT_TO_REPORT);
         this.waiting = false;
 
         if (this.sending || this.configs.size === 0) {
