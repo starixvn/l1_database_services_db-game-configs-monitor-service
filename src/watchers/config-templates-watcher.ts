@@ -10,16 +10,18 @@ export type ConfigTemplateEvents<T extends Document> = {
 export class ConfigTemplatesWatcher<T extends Document> extends Watcher<ConfigTemplateEvents<T>, ConfigTemplateSchema<T>> {
     constructor(configTemplatesCollection: Collection<ConfigTemplateSchema<T>>, private readonly configType: string, logger: BaseLogger) {
         super(configTemplatesCollection, [], logger);
+        this.handleDocumentInsert = this.handleFullDocument;
+        this.handleDocumentReplace = this.handleFullDocument;
     }
 
-    protected handleDocumentInsert(changeDocument: ChangeStreamInsertDocument<ConfigTemplateSchema<T>>): void {
+    private handleFullDocument(changeDocument: ChangeStreamInsertDocument<ConfigTemplateSchema<T>> | ChangeStreamReplaceDocument<ConfigTemplateSchema<T>>) {
         const { fullDocument } = changeDocument;
         const { category, type, targets, data } = fullDocument;
 
         this.emit<"CONFIG">("CONFIG", this.configType, { category, type, targets, data });
     }
 
-    protected handleDocumentUpdate(changeDocument: ChangeStreamUpdateDocument<ConfigTemplateSchema<T>>): void {
+    protected handleDocumentUpdate(changeDocument: ChangeStreamUpdateDocument<ConfigTemplateSchema<T>>) {
         const { fullDocument } = changeDocument;
 
         if (!fullDocument) {
@@ -31,13 +33,6 @@ export class ConfigTemplatesWatcher<T extends Document> extends Watcher<ConfigTe
         }
 
         const { category, type, targets, data } = fullDocument;
-        this.emit<"CONFIG">("CONFIG", this.configType, { category, type, targets, data });
-    }
-
-    protected handleDocumentReplace(changeDocument: ChangeStreamReplaceDocument<ConfigTemplateSchema<T>>): void {
-        const { fullDocument } = changeDocument;
-        const { category, type, targets, data } = fullDocument;
-
         this.emit<"CONFIG">("CONFIG", this.configType, { category, type, targets, data });
     }
 }

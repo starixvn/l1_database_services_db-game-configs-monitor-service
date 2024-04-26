@@ -10,16 +10,18 @@ export type IndexTemplateEvents = {
 export class IndexTemplatesWatcher extends Watcher<IndexTemplateEvents, IndexTemplatesSchema> {
     constructor(indexTemplatesCollection: Collection<IndexTemplatesSchema>, logger: BaseLogger) {
         super(indexTemplatesCollection, [], logger);
+        this.handleDocumentInsert = this.handleFullDocument;
+        this.handleDocumentReplace = this.handleFullDocument;
     }
 
-    protected handleDocumentInsert(changeDocument: ChangeStreamInsertDocument<IndexTemplatesSchema>): void {
+    private handleFullDocument(changeDocument: ChangeStreamInsertDocument<IndexTemplatesSchema> | ChangeStreamReplaceDocument<IndexTemplatesSchema>) {
         const { fullDocument } = changeDocument;
         const { category, type, colls } = fullDocument;
 
         this.emit<"INDEX">("INDEX", { category, type, colls });
     }
 
-    protected handleDocumentUpdate(changeDocument: ChangeStreamUpdateDocument<IndexTemplatesSchema>): void {
+    protected handleDocumentUpdate(changeDocument: ChangeStreamUpdateDocument<IndexTemplatesSchema>) {
         const { fullDocument } = changeDocument;
 
         if (!fullDocument) {
@@ -31,14 +33,6 @@ export class IndexTemplatesWatcher extends Watcher<IndexTemplateEvents, IndexTem
         }
 
         const { category, type, colls } = fullDocument;
-        this.emit<"INDEX">("INDEX", { category, type, colls });
-    }
-
-    protected handleDocumentReplace(changeDocument: ChangeStreamReplaceDocument<IndexTemplatesSchema>): void {
-        const {
-            fullDocument: { category, type, colls },
-        } = changeDocument;
-
         this.emit<"INDEX">("INDEX", { category, type, colls });
     }
 }

@@ -30,7 +30,7 @@ export class ConfigReporter extends Subsciber<keyof ConfigDeployEvents, ConfigDe
         this.reportConfig = this.reportConfig.bind(this);
     }
 
-    private async reportConfig(configType: string, gameName: string, upsertedCount: number = 0, modifiedCount: number = 0) {
+    private async reportConfig(configType: string, gameName: string, upsertedCount = 0, modifiedCount = 0) {
         while (this.sending) {
             await wait(1_000);
         }

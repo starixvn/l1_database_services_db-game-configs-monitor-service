@@ -17,7 +17,7 @@ import { TypedEventEmitter } from "@ldb/types";
 const CHANGE_STREAM_OPTIONS = { fullDocument: "updateLookup", maxTimeMS: 0 } as const satisfies ChangeStreamOptions;
 
 export class Watcher<Events extends EventsDescription, Schema extends Document = Document> extends TypedEventEmitter<Events> {
-    private changeStream: ChangeStream<Schema>;
+    private readonly changeStream: ChangeStream<Schema>;
 
     constructor(protected readonly collection: Collection<Schema>, pipeline: Document[] = [], protected readonly logger: BaseLogger) {
         super();
@@ -45,13 +45,17 @@ export class Watcher<Events extends EventsDescription, Schema extends Document =
 
         switch (operationType) {
             case "insert":
-                return this.handleDocumentInsert(changeDocument);
+                this.handleDocumentInsert(changeDocument);
+                break;
             case "update":
-                return this.handleDocumentUpdate(changeDocument);
+                this.handleDocumentUpdate(changeDocument);
+                break;
             case "replace":
-                return this.handleDocumentReplace(changeDocument);
+                this.handleDocumentReplace(changeDocument);
+                break;
             case "delete":
-                return this.handleDocumentDelete(changeDocument);
+                this.handleDocumentDelete(changeDocument);
+                break;
         }
     }
 

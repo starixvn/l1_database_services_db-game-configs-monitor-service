@@ -10,7 +10,7 @@ export type ConfigEvents<T extends Document> = {
 };
 
 export class ConfigInitiator<T extends Document> extends Dispatcher<ConfigEvents<T>, keyof GameConfigEvents, GameConfigEvents, GameConfigsWatcher> {
-    constructor(private readonly configTemplateCollection: Collection<ConfigTemplateSchema<T>>, private configType: string, logger: BaseLogger) {
+    constructor(private readonly configTemplateCollection: Collection<ConfigTemplateSchema<T>>, private readonly configType: string, logger: BaseLogger) {
         super(logger);
         this.selfBound();
     }

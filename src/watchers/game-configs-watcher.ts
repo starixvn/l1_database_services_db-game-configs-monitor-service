@@ -13,7 +13,7 @@ export class GameConfigsWatcher extends Watcher<GameConfigEvents, GameConfigsSch
         super(gameConfigsCollection, [], logger);
     }
 
-    protected handleDocumentInsert(changeDocument: ChangeStreamInsertDocument<GameConfigsSchema>): void {
+    protected handleDocumentInsert(changeDocument: ChangeStreamInsertDocument<GameConfigsSchema>) {
         const { fullDocument } = changeDocument;
         const { name, gameId, type } = fullDocument;
 

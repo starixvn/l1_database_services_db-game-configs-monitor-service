@@ -14,7 +14,7 @@ export class Subsciber<
         return this.constructor.name;
     }
 
-    protected handleError(error: unknown, component: string): void {
+    protected handleError(error: unknown, component: string) {
         this.logger.logError({ title: `${this.className}.${component}`, message: error });
     }
 
