@@ -69,7 +69,7 @@ export class IndexReporter extends Subsciber<keyof IndexDeployEvents, IndexDeplo
             this.indexes.delete(namespace);
         }
 
-        this.logger.logWarning({ title: "IndexDeployed", message: lines.join("\n") });
+        this.logger.logWarning({ title: "IndexDeployed", message: lines.join("  \n") });
 
         this.sending = false;
     }

@@ -12,7 +12,7 @@ const formatMap = (list: Map<string, Result>) => {
         const { upsertedCount, modifiedCount } = gameCounter;
         lines.push(`- **${gameName}**  I-${upsertedCount} M-${modifiedCount}`);
     }
-    return lines.join("\n");
+    return lines.join("  \n");
 };
 
 export class ConfigReporter extends Subsciber<keyof ConfigDeployEvents, ConfigDeployEvents, ConfigDeployer<Document>> {
@@ -72,7 +72,7 @@ export class ConfigReporter extends Subsciber<keyof ConfigDeployEvents, ConfigDe
             this.configs.delete(configType);
         }
 
-        this.logger.logWarning({ title: "ConfigDeployed", message: lines.join("\n") });
+        this.logger.logWarning({ title: "ConfigDeployed", message: lines.join("  \n") });
 
         this.sending = false;
     }
