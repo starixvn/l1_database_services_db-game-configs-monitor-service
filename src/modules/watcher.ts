@@ -14,7 +14,7 @@ import type {
 } from "@ldb/mongo";
 import { TypedEventEmitter } from "@ldb/types";
 
-const CHANGE_STREAM_OPTIONS = { fullDocument: "updateLookup", maxTimeMS: 0 } as const satisfies ChangeStreamOptions;
+const CHANGE_STREAM_OPTIONS = { fullDocument: "updateLookup", fullDocumentBeforeChange: "whenAvailable", maxTimeMS: 0 } as const satisfies ChangeStreamOptions;
 
 export class Watcher<Events extends EventsDescription, Schema extends Document = Document> extends TypedEventEmitter<Events> {
     private readonly changeStream: ChangeStream<Schema>;
