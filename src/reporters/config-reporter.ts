@@ -11,7 +11,7 @@ const formatMap = (list: Map<string, Result>) => {
     const lines: string[] = [];
     for (const [gameName, gameCounter] of list) {
         const { upsertedCount, modifiedCount } = gameCounter;
-        lines.push(`- **${gameName}**  I-${upsertedCount} M-${modifiedCount}`);
+        lines.push(`    **${gameName}**  I-${upsertedCount} M-${modifiedCount}`);
     }
     return lines.join("  \n");
 };
