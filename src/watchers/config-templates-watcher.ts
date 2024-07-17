@@ -35,4 +35,19 @@ export class ConfigTemplatesWatcher<T extends Document> extends Watcher<ConfigTe
         const { category, type, targets, data } = fullDocument;
         this.emit<"CONFIG">("CONFIG", this.configType, { category, type, targets, data });
     }
+
+    protected handleDocumentReplace(changeDocument: ChangeStreamReplaceDocument<ConfigTemplateSchema<T>>) {
+        const { fullDocument } = changeDocument;
+
+        if (!fullDocument) {
+            this.logger.logWarning(
+                { title: this.className, message: "Got empty data when watching data replace" },
+                { extra: { namespace: this.collection.namespace, changeDocument } }
+            );
+            return;
+        }
+
+        const { category, type, targets, data } = fullDocument;
+        this.emit<"CONFIG">("CONFIG", this.configType, { category, type, targets, data });
+    }
 }

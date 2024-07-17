@@ -35,4 +35,19 @@ export class IndexTemplatesWatcher extends Watcher<IndexTemplateEvents, IndexTem
         const { category, type, colls } = fullDocument;
         this.emit<"INDEX">("INDEX", { category, type, colls });
     }
+
+    protected handleDocumentReplace(changeDocument: ChangeStreamReplaceDocument<IndexTemplatesSchema>) {
+        const { fullDocument } = changeDocument;
+
+        if (!fullDocument) {
+            this.logger.logWarning(
+                { title: this.className, message: "Got empty data when watching data replace" },
+                { extra: { namespace: this.collection.namespace, changeDocument } }
+            );
+            return;
+        }
+
+        const { category, type, colls } = fullDocument;
+        this.emit<"INDEX">("INDEX", { category, type, colls });
+    }
 }
