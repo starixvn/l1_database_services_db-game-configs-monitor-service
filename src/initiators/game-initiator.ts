@@ -53,8 +53,8 @@ export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>,
         for (const target of targets) {
             for (const definition of definitions) {
                 const { gameConfigs, id } = definition;
-                Object.assign(definition, { _id: { gameConfigs, id } });
-                this.emit<"deployConfig">("deployConfig", configType, target, { gameConfigs, id }, definition, true);
+                const data = Object.assign({}, { _id: { gameConfigs, id } }, definition);
+                this.emit<"deployConfig">("deployConfig", configType, target, { gameConfigs, id }, data, true);
             }
         }
     }
