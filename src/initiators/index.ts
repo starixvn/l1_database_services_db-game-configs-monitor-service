@@ -9,7 +9,7 @@ export class Initiators {
         readonly gameInitiator: GameInitiator<Document>,
         readonly indexInitiator: IndexInitiator,
         readonly archiveInitiator: ArchiveInitiator,
-        readonly summaryInitiator: SummaryInitiator
+        readonly summaryInitiator: SummaryInitiator,
     ) {}
 }
 

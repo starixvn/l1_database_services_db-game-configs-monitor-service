@@ -19,7 +19,11 @@ const CHANGE_STREAM_OPTIONS = { fullDocument: "updateLookup", fullDocumentBefore
 export class Watcher<Events extends EventsDescription, Schema extends Document = Document> extends TypedEventEmitter<Events> {
     private readonly changeStream: ChangeStream<Schema>;
 
-    constructor(protected readonly collection: Collection<Schema>, pipeline: Document[] = [], protected readonly logger: BaseLogger) {
+    constructor(
+        protected readonly collection: Collection<Schema>,
+        pipeline: Document[] = [],
+        protected readonly logger: BaseLogger,
+    ) {
         super();
         this.changeStream = this.collection.watch(pipeline, CHANGE_STREAM_OPTIONS);
         this.selfBound();

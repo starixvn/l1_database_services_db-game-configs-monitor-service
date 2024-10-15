@@ -11,7 +11,10 @@ export type IndexDeployEvents = {
 };
 
 export class IndexDeployer extends Dispatcher<IndexDeployEvents, keyof IndexEvents, IndexEvents, Initiators> {
-    constructor(private readonly targetMongo: MongoClient, logger: BaseLogger) {
+    constructor(
+        private readonly targetMongo: MongoClient,
+        logger: BaseLogger,
+    ) {
         super(logger);
         this.selfBound();
     }

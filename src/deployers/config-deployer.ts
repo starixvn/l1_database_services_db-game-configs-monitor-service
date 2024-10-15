@@ -11,7 +11,10 @@ export type ConfigDeployEvents = {
 };
 
 export class ConfigDeployer<T extends Document> extends Dispatcher<ConfigDeployEvents, keyof ConfigEvents<T>, ConfigEvents<T>, Initiators<T>> {
-    constructor(private readonly targetMongo: MongoClient, logger: BaseLogger) {
+    constructor(
+        private readonly targetMongo: MongoClient,
+        logger: BaseLogger,
+    ) {
         super(logger);
         this.selfBound();
     }

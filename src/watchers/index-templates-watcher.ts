@@ -27,7 +27,7 @@ export class IndexTemplatesWatcher extends Watcher<IndexTemplateEvents, IndexTem
         if (!fullDocument) {
             this.logger.logWarning(
                 { title: this.className, message: "Got empty data when watching data update" },
-                { extra: { namespace: this.collection.namespace, changeDocument } }
+                { extra: { namespace: this.collection.namespace, changeDocument } },
             );
             return;
         }
@@ -42,7 +42,7 @@ export class IndexTemplatesWatcher extends Watcher<IndexTemplateEvents, IndexTem
         if (!fullDocument) {
             this.logger.logWarning(
                 { title: this.className, message: "Got empty data when watching data replace" },
-                { extra: { namespace: this.collection.namespace, changeDocument } }
+                { extra: { namespace: this.collection.namespace, changeDocument } },
             );
             return;
         }

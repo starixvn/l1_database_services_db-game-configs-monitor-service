@@ -15,7 +15,7 @@ export class App {
         private readonly initiators: Initiators,
         private readonly deployers: Deployers,
         private readonly reporters: Reporters,
-        private readonly logger: BaseLogger
+        private readonly logger: BaseLogger,
     ) {
         this.selfBound();
         this.handleExceptions();
