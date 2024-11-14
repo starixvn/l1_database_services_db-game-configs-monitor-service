@@ -1,7 +1,7 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamNameSpace, Collection, Document, MongoClient } from "@ldb/mongo";
+import { Dispatcher } from "@ldb/utils";
 import type { ConfigEvents, ConfigInitiator, GameInitiator } from "../initiators/index.js";
-import { Dispatcher } from "../modules/dispatcher.js";
 import type { ConfigSchema } from "../types/schema.js";
 
 type Initiators<T extends Document> = ConfigInitiator<T> | GameInitiator<T>;
@@ -10,7 +10,7 @@ export type ConfigDeployEvents = {
     CONFIGURED: (configType: string, gameName: string, upsertedCount: number, modifiedCount: number) => void;
 };
 
-export class ConfigDeployer<T extends Document> extends Dispatcher<ConfigDeployEvents, keyof ConfigEvents<T>, ConfigEvents<T>, Initiators<T>> {
+export class ConfigDeployer<T extends Document> extends Dispatcher<ConfigDeployEvents, ConfigEvents<T>> {
     constructor(
         private readonly targetMongo: MongoClient,
         logger: BaseLogger,

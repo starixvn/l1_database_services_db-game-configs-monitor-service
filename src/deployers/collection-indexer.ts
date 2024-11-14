@@ -1,4 +1,4 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import { MongoServerError, type CollationOptions, type Collection, type Document, type IndexDescription, type IndexDirection } from "@ldb/mongo";
 
 export async function deployIndex<T extends Document>(collection: Collection<T>, index: IndexDescription, logger: BaseLogger) {

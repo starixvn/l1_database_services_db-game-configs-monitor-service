@@ -1,4 +1,4 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { Collection } from "@ldb/mongo";
 import type { ArchiveTemplate, ConfigTemplateSchema, SummaryTemplate } from "../types/schema.js";
 import { ConfigTemplatesWatcher } from "./config-templates-watcher.js";

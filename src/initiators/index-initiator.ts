@@ -1,7 +1,7 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamNameSpace, Collection, IndexDescription } from "@ldb/mongo";
+import { Dispatcher } from "@ldb/utils";
 import { CATEGORY as category } from "../constants.js";
-import { Dispatcher } from "../modules/dispatcher.js";
 import type { GameConfigsSchema, IndexTemplatesSchema } from "../types/schema.js";
 import type { GameConfigEvents, GameConfigsWatcher } from "../watchers/index.js";
 import { isGameExcluded, mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator-utils.js";
@@ -12,7 +12,7 @@ export type IndexEvents = {
     deployIndex: (namespace: ChangeStreamNameSpace, descriptions: IndexDescription[], notify: boolean) => Promise<void>;
 };
 
-export class IndexInitiator extends Dispatcher<IndexEvents, keyof GameConfigEvents, GameConfigEvents, GameConfigsWatcher> {
+export class IndexInitiator extends Dispatcher<IndexEvents, GameConfigEvents, GameConfigsWatcher> {
     constructor(
         private readonly indexTemplatesCollection: Collection<IndexTemplatesSchema>,
         logger: BaseLogger,

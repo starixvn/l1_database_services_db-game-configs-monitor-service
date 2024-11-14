@@ -1,7 +1,7 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { Document } from "@ldb/mongo";
+import { Subscriber } from "@ldb/utils";
 import type { ConfigDeployer, ConfigDeployEvents } from "../deployers/config-deployer.js";
-import { Subsciber } from "../modules/subscriber.js";
 import { WAIT_TO_REPORT } from "./constants.js";
 
 type Result = { upsertedCount: number; modifiedCount: number };
@@ -16,7 +16,7 @@ const formatMap = (list: Map<string, Result>) => {
     return lines.join("  \n");
 };
 
-export class ConfigReporter extends Subsciber<keyof ConfigDeployEvents, ConfigDeployEvents, ConfigDeployer<Document>> {
+export class ConfigReporter extends Subscriber<ConfigDeployEvents> {
     private waiting = false;
     private sending = false;
     private readonly configs: Map<string, Map<string, Result>> = new Map();

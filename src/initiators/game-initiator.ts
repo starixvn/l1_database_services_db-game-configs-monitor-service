@@ -1,18 +1,21 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { Collection, Document, IndexDescription } from "@ldb/mongo";
-import { Dispatcher } from "../modules/dispatcher.js";
+import { Dispatcher, type EventsDescription, type Intersection, type TypedEventEmitter } from "@ldb/utils";
 import type { ConfigMetadata, ConfigTemplateSchema, GameConfigsSchema, IndexTemplatesSchema } from "../types/schema.js";
 import type { ConfigTemplateEvents, IndexTemplateEvents } from "../watchers/index.js";
 import { ConfigTemplatesWatcher, IndexTemplatesWatcher } from "../watchers/index.js";
 import type { CollectionIndexesDefinition, ConfigEvents, IndexEvents } from "./index.js";
 import { isGameExcluded, mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator-utils.js";
 
-type Events<T extends Document> = IndexTemplateEvents & ConfigTemplateEvents<T>;
+type Events<T extends Document> = IndexTemplateEvents | ConfigTemplateEvents<T>;
+
+type WrapEmitter<E> = E extends infer T ? (T extends EventsDescription ? TypedEventEmitter<T> : never) : never;
+
 type Watchers<T extends Document> = IndexTemplatesWatcher | ConfigTemplatesWatcher<T>;
 
 export type GameEvents<T extends Document> = IndexEvents & ConfigEvents<T>;
 
-export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>, keyof Events<T>, Events<T>, Watchers<T>> {
+export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>, Events<T>, WrapEmitter<Events<T>> | TypedEventEmitter<Intersection<Events<T>>>> {
     constructor(
         private readonly gameConfigsCollection: Collection<GameConfigsSchema>,
         logger: BaseLogger,

@@ -1,6 +1,6 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamInsertDocument, ChangeStreamReplaceDocument, ChangeStreamUpdateDocument, Collection } from "@ldb/mongo";
-import { Watcher } from "../modules/watcher.js";
+import { Watcher } from "@ldb/watcher";
 import type { IndexTemplatesSchema } from "../types/schema.js";
 
 export type IndexTemplateEvents = {

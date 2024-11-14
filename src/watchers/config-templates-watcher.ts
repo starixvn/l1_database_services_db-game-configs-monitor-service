@@ -1,6 +1,6 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamInsertDocument, ChangeStreamReplaceDocument, ChangeStreamUpdateDocument, Collection, Document } from "@ldb/mongo";
-import { Watcher } from "../modules/watcher.js";
+import { Watcher } from "@ldb/watcher";
 import type { ConfigTemplateSchema } from "../types/schema.js";
 
 export type ConfigTemplateEvents<T extends Document> = {

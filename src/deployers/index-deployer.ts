@@ -1,7 +1,7 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamNameSpace, Collection, Document, IndexDescription, MongoClient } from "@ldb/mongo";
+import { Dispatcher } from "@ldb/utils";
 import type { GameInitiator, IndexEvents, IndexInitiator } from "../initiators/index.js";
-import { Dispatcher } from "../modules/dispatcher.js";
 import { deployIndex } from "./collection-indexer.js";
 
 type Initiators = IndexInitiator | GameInitiator<Document>;
@@ -10,7 +10,7 @@ export type IndexDeployEvents = {
     INDEXED: (namespace: string, indexName: string) => void;
 };
 
-export class IndexDeployer extends Dispatcher<IndexDeployEvents, keyof IndexEvents, IndexEvents, Initiators> {
+export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
     constructor(
         private readonly targetMongo: MongoClient,
         logger: BaseLogger,
