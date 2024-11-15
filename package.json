@@ -7,17 +7,14 @@
   "contributors": [
     "Billy Bùi (https://git3.nexdev.net/billy.bui)"
   ],
-  "keywords": [
-    "prettier",
-    "config"
-  ],
   "repository": {
     "type": "git",
     "url": "https://git3.nexdev.net/l1/database/services/db-game-configs-monitor-service.git"
   },
   "scripts": {
-    "test": "jest --testPathPattern=tests/unit-tests/",
-    "test-coverage": "jest --collect-coverage --testPathPattern=tests/unit-tests/",
+    "test:dev": "vitest",
+    "test": "vitest run",
+    "test-coverage": "vitest run --coverage",
     "build": "rimraf lib && tsc",
     "dev": "node lib/index.js"
   },
