@@ -7,7 +7,7 @@ const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const formatMap = (list: Map<string, Set<string>>) => {
     const lines: string[] = [];
     for (const [item, indexList] of list) {
-        lines.push(`${item}-\`${indexList.size}\``);
+        lines.push(`${item}-${indexList.size}`);
     }
     return lines.join("  ");
 };
