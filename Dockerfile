@@ -15,13 +15,15 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 RUN rm lib/app-configs.*
 
-FROM base
+# Core CI/CD will cache `builder` stage
+FROM base AS builder
+COPY --from=prod-deps --chown=node:node /app/node_modules /app/node_modules
+COPY --from=build --chown=node:node /app/lib /app/
+
+FROM builder
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 ENV NODE_OPTIONS=""
-
-COPY --from=prod-deps --chown=node:node /app/node_modules /app/node_modules
-COPY --from=build --chown=node:node /app/lib /app/
 
 WORKDIR /app
 USER node
