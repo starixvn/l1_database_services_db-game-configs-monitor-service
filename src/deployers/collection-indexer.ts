@@ -51,7 +51,7 @@ function generateIndexName(collectionName: string, indexDescription: IndexDescri
      */
     name = [name, collectionName, generateKeysName(key), generateCollationName(collation)].filter(Boolean).join("_");
 
-    return name;
+    return `@${name}` as const;
 }
 
 function generateKeysName(key: IndexDescription["key"]): string {
