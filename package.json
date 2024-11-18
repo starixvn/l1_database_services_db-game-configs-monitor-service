@@ -21,6 +21,7 @@
   "files": [
     "lib/**"
   ],
+  "packageManager": "pnpm@9.13.2",
   "dependencies": {
     "@ldb/healthcheck": "0.1.3",
     "@ldb/logger": "1.1.2",
