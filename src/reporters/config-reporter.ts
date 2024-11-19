@@ -1,12 +1,11 @@
 import type { BaseLogger } from "@ldb/logger";
 import type { Document } from "@ldb/mongo";
-import { Subscriber } from "@ldb/utils";
+import { Subscriber, wait } from "@ldb/utils";
 import type { ConfigDeployer, ConfigDeployEvents } from "../deployers/config-deployer.js";
 import { WAIT_TO_REPORT } from "./constants.js";
 
 type Result = { upsertedCount: number; modifiedCount: number };
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const formatMap = (list: Map<string, Result>) => {
     const lines: string[] = [];
     for (const [gameName, gameCounter] of list) {

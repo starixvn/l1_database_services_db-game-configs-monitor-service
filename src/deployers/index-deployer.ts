@@ -26,9 +26,10 @@ export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
     private async deployIndexes(namespace: ChangeStreamNameSpace, indexes: IndexDescription[], notify: boolean) {
         for (const index of indexes) {
             const deployedIndexName = await this.deployIndex(namespace, index);
-            this.logger.logDebug({ title: `${this.className}@deployIndex`, message: `${namespace.db}.${namespace.coll} - ${deployedIndexName}` });
+            const collectionNamespace = `${namespace.db}.${namespace.coll}`;
+            this.logger.logDebug({ title: `${this.className}@deployIndex`, message: `${collectionNamespace} - ${deployedIndexName}` });
             if (notify) {
-                this.emit<"INDEXED">("INDEXED", namespace, deployedIndexName);
+                this.emit<"INDEXED">("INDEXED", collectionNamespace, deployedIndexName);
             }
         }
     }

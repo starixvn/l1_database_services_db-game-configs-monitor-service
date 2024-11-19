@@ -18,8 +18,8 @@ importers:
         specifier: 6.10.3
         version: 6.10.3
       '@ldb/utils':
-        specifier: 0.3.4-rc.1
-        version: 0.3.4-rc.1
+        specifier: 0.3.4
+        version: 0.3.4
       '@ldb/watcher':
         specifier: 0.1.0
         version: 0.1.0
@@ -433,8 +433,8 @@ packages:
   '@ldb/utils@0.3.2':
     resolution: {integrity: sha512-ltQfKn52ORqyoSg2OogRM4YUsWzhQH8y1xf7plo1OlRBDltinlLOSALMQUaChZGO/IJNAxZ6V5Y+ghkAr/ru7A==}
 
-  '@ldb/utils@0.3.4-rc.1':
-    resolution: {integrity: sha512-iBPEZ+ZoAHbqBUhOSARgukabGnv4unJfn79uJ8QFSKX4yK2287EcvJa2rw+OgQAY3g9Yhe2USNmTJQ1hvRkM3Q==}
+  '@ldb/utils@0.3.4':
+    resolution: {integrity: sha512-iCWttrbA6AfY9sMvUHNfIgeGjUQeCPACv7DDuRh9eF0qkvQ8jzBCN9t+rQH8hqq8/t2DIi8GcKAY1ykt3NdgPA==}
 
   '@ldb/vitest-config@0.1.2':
     resolution: {integrity: sha512-84+GX8fiQWte1BqxPLaG5L+BOlwNzz+ffhA/zd8g4ehBgxZFNPV5cl0chOaoq9sXpNUSreKE/pnP+d7/ZLsoBA==}
@@ -2272,7 +2272,7 @@ snapshots:
     dependencies:
       '@ldb/base-logger': 1.1.4
 
-  '@ldb/utils@0.3.4-rc.1':
+  '@ldb/utils@0.3.4':
     dependencies:
       '@ldb/base-logger': 1.1.4
 

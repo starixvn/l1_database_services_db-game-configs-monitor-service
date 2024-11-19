@@ -1,9 +1,8 @@
 import type { BaseLogger } from "@ldb/logger";
-import { Subscriber } from "@ldb/utils";
+import { Subscriber, wait } from "@ldb/utils";
 import { IndexDeployer, IndexDeployEvents } from "../deployers/index-deployer.js";
 import { WAIT_TO_REPORT } from "./constants.js";
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const formatMap = (list: Map<string, Set<string>>) => {
     const lines: string[] = [];
     for (const [item, indexList] of list) {
