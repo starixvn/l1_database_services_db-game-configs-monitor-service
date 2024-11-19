@@ -45,4 +45,8 @@ export class ConfigDeployer<T extends Document> extends Dispatcher<ConfigDeployE
     subscribe(publisher: Initiators<T>): boolean {
         return super.subscribe(publisher, "deployConfig", this.deployConfigs);
     }
+
+    unsubscribe(publisher: Initiators<T>): boolean {
+        return super.unsubscribe(publisher, "deployConfig", this.deployConfigs);
+    }
 }

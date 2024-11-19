@@ -78,4 +78,8 @@ export class IndexReporter extends Subscriber<IndexDeployEvents> {
     subscribe(publisher: IndexDeployer): boolean {
         return super.subscribe(publisher, "INDEXED", this.reportIndex);
     }
+
+    unsubscribe(publisher: IndexDeployer): boolean {
+        return super.unsubscribe(publisher, "INDEXED", this.reportIndex);
+    }
 }

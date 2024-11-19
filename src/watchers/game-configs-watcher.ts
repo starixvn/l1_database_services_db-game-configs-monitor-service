@@ -93,7 +93,7 @@ export class GameConfigsWatcher extends Watcher<GameConfigEvents, GameConfigsSch
         const games = this.collection.find({}, { projection: { _id: 0, name: 1, gameId: 1, type: 1 } });
 
         for await (const { name, gameId, type } of games) {
-            this.emit<"INITIATE">("INITIATE", { name, gameId, type });
+            this.emit("INITIATE", { name, gameId, type });
         }
     }
 }

@@ -81,4 +81,8 @@ export class ConfigReporter extends Subscriber<ConfigDeployEvents> {
     subscribe(publisher: ConfigDeployer<Document>): boolean {
         return super.subscribe(publisher, "CONFIGURED", this.reportConfig);
     }
+
+    unsubscribe(publisher: ConfigDeployer<Document>): boolean {
+        return super.unsubscribe(publisher, "CONFIGURED", this.reportConfig);
+    }
 }
