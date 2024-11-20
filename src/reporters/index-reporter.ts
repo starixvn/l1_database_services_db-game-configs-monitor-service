@@ -1,18 +1,17 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
+import { Subscriber, wait } from "@ldb/utils";
 import { IndexDeployer, IndexDeployEvents } from "../deployers/index-deployer.js";
-import { Subsciber } from "../modules/subscriber.js";
 import { WAIT_TO_REPORT } from "./constants.js";
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const formatMap = (list: Map<string, Set<string>>) => {
     const lines: string[] = [];
     for (const [item, indexList] of list) {
-        lines.push(`${item}-\`${indexList.size}\``);
+        lines.push(`${item}-${indexList.size}`);
     }
     return lines.join("  ");
 };
 
-export class IndexReporter extends Subsciber<keyof IndexDeployEvents, IndexDeployEvents, IndexDeployer> {
+export class IndexReporter extends Subscriber<IndexDeployEvents> {
     private waiting = false;
     private sending = false;
     private readonly indexes: Map<string, Map<string, Set<string>>> = new Map();
@@ -77,5 +76,9 @@ export class IndexReporter extends Subsciber<keyof IndexDeployEvents, IndexDeplo
 
     subscribe(publisher: IndexDeployer): boolean {
         return super.subscribe(publisher, "INDEXED", this.reportIndex);
+    }
+
+    unsubscribe(publisher: IndexDeployer): boolean {
+        return super.unsubscribe(publisher, "INDEXED", this.reportIndex);
     }
 }

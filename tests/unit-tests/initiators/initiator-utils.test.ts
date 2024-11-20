@@ -10,11 +10,11 @@ afterAll(() => {
 describe("Initiator utilities", () => {
     describe("[function mapNamespace]", () => {
         it("coll = baseName + postfix", () => {
-        const testCases: [TemplateNamespace, string, ChangeStreamNameSpace][] = [
-            [{ db: "minigame", postfix: "_rounds" }, "game", { db: "minigame", coll: "game_rounds" }],
-            [{ db: "log", postfix: "" }, "bets", { db: "log", coll: "bets" }],
-        ];
-        for (const [template, name, expectResult] of testCases) {
+            const testCases: [TemplateNamespace, string, ChangeStreamNameSpace][] = [
+                [{ db: "minigame", postfix: "_rounds" }, "game", { db: "minigame", coll: "game_rounds" }],
+                [{ db: "log", postfix: "" }, "bets", { db: "log", coll: "bets" }],
+            ];
+            for (const [template, name, expectResult] of testCases) {
                 expect(mapNamespace(template, name)).toStrictEqual(expectResult);
             }
         });

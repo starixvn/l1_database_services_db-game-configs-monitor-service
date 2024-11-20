@@ -1,6 +1,4 @@
-import type { SeverityLevel } from "@ldb/base-logger";
-import type { NodeOptions, SentryOptions } from "@ldb/sentry-logger";
-import type { SkynexOptions } from "@ldb/skynex-logger";
+import type { NodeOptions, SentryOptions, SeverityLevel, SkynexOptions } from "@ldb/logger";
 import { name, version } from "./metadata.js";
 
 export const environment = "DEV" as const;
@@ -32,5 +30,5 @@ const dbSrv = "10.10.50.12:39100,10.10.50.13:39100,10.10.50.14:39100" as const;
 const dbRepl = "L1Local" as const;
 
 export const database = {
-    targetUrl: `mongodb://${dbCred}@${dbSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}&replicaSet=${dbRepl}`,
+    targetUrl: `mongodb://${dbCred}@${dbSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}-DEV&replicaSet=${dbRepl}`,
 } as const;

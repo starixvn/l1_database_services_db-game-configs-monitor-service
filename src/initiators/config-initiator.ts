@@ -1,16 +1,21 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamNameSpace, Collection, Document } from "@ldb/mongo";
+import { Dispatcher } from "@ldb/utils";
 import { CATEGORY as category } from "../constants.js";
-import { Dispatcher } from "../modules/dispatcher.js";
 import type { ConfigMetadata, ConfigSchema, ConfigTemplateSchema, GameConfigsSchema } from "../types/schema.js";
 import type { GameConfigEvents, GameConfigsWatcher } from "../watchers/index.js";
+import { isGameExcluded } from "./initiator-utils.js";
 
 export type ConfigEvents<T extends Document> = {
     deployConfig: (type: string, namespace: ChangeStreamNameSpace, filter: Document, data: ConfigSchema<T>, notify: boolean) => Promise<void>;
 };
 
-export class ConfigInitiator<T extends Document> extends Dispatcher<ConfigEvents<T>, keyof GameConfigEvents, GameConfigEvents, GameConfigsWatcher> {
-    constructor(private readonly configTemplateCollection: Collection<ConfigTemplateSchema<T>>, private readonly configType: string, logger: BaseLogger) {
+export class ConfigInitiator<T extends Document> extends Dispatcher<ConfigEvents<T>, GameConfigEvents> {
+    constructor(
+        private readonly configTemplateCollection: Collection<ConfigTemplateSchema<T>>,
+        private readonly configType: string,
+        logger: BaseLogger,
+    ) {
         super(logger);
         this.selfBound();
     }
@@ -29,10 +34,15 @@ export class ConfigInitiator<T extends Document> extends Dispatcher<ConfigEvents
     }
 
     private async handleGameConfig(gameConfig: GameConfigsSchema, notify: boolean) {
+        const { gameId, name, type } = gameConfig;
+
+        if (isGameExcluded(type, gameId)) {
+            return;
+        }
+
         const definition = await this.getConfigDefinition(gameConfig);
         const { targets } = definition;
 
-        const { gameId, name, type } = gameConfig;
         const metadata: ConfigMetadata = {
             gameConfigs: { gameId, name },
             category,

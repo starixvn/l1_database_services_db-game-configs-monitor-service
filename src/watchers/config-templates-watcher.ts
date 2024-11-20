@@ -1,6 +1,6 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
 import type { ChangeStreamInsertDocument, ChangeStreamReplaceDocument, ChangeStreamUpdateDocument, Collection, Document } from "@ldb/mongo";
-import { Watcher } from "../modules/watcher.js";
+import { Watcher } from "@ldb/watcher";
 import type { ConfigTemplateSchema } from "../types/schema.js";
 
 export type ConfigTemplateEvents<T extends Document> = {
@@ -8,7 +8,11 @@ export type ConfigTemplateEvents<T extends Document> = {
 };
 
 export class ConfigTemplatesWatcher<T extends Document> extends Watcher<ConfigTemplateEvents<T>, ConfigTemplateSchema<T>> {
-    constructor(configTemplatesCollection: Collection<ConfigTemplateSchema<T>>, private readonly configType: string, logger: BaseLogger) {
+    constructor(
+        configTemplatesCollection: Collection<ConfigTemplateSchema<T>>,
+        private readonly configType: string,
+        logger: BaseLogger,
+    ) {
         super(configTemplatesCollection, [], logger);
         this.handleDocumentInsert = this.handleFullDocument;
         this.handleDocumentReplace = this.handleFullDocument;
@@ -27,7 +31,7 @@ export class ConfigTemplatesWatcher<T extends Document> extends Watcher<ConfigTe
         if (!fullDocument) {
             this.logger.logWarning(
                 { title: this.className, message: "Got empty data when watching data update" },
-                { extra: { namespace: this.collection.namespace, changeDocument } }
+                { extra: { namespace: this.collection.namespace, changeDocument } },
             );
             return;
         }
@@ -42,7 +46,7 @@ export class ConfigTemplatesWatcher<T extends Document> extends Watcher<ConfigTe
         if (!fullDocument) {
             this.logger.logWarning(
                 { title: this.className, message: "Got empty data when watching data replace" },
-                { extra: { namespace: this.collection.namespace, changeDocument } }
+                { extra: { namespace: this.collection.namespace, changeDocument } },
             );
             return;
         }

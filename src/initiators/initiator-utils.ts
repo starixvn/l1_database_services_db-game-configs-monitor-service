@@ -1,6 +1,6 @@
 import type { ChangeStreamNameSpace, IndexDescription } from "@ldb/mongo";
 import { EJSON } from "@ldb/mongo";
-import type { TemplateNamespace } from "../types/schema.js";
+import type { GameConfigsSchema, TemplateNamespace } from "../types/schema.js";
 
 export const INVALID_INDEX = { key: {} } as const;
 
@@ -15,7 +15,15 @@ export const notInvalidIndex = (index: IndexDescription) => index !== INVALID_IN
 export const parseIndexDefinition = (indexString: string): IndexDescription => {
     try {
         return EJSON.parse(indexString);
-    } catch (error) {
+    } catch {
         return INVALID_INDEX;
     }
+};
+
+export const isGameExcluded = (type: GameConfigsSchema["type"], gameId: GameConfigsSchema["gameId"]) => {
+    if ([0, 1].includes(type) && gameId < 80) {
+        return true;
+    }
+
+    return false;
 };

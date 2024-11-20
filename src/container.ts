@@ -1,14 +1,12 @@
-import { Logger } from "@ldb/logger";
+import { HealthcheckServer } from "@ldb/healthcheck";
+import { Logger, SentryLogger, SkynexLogger, TerminalLogger } from "@ldb/logger";
 import type { MongoClient } from "@ldb/mongo";
-import { SentryLogger } from "@ldb/sentry-logger";
-import { SkynexLogger } from "@ldb/skynex-logger";
-import { TerminalLogger } from "@ldb/terminal-logger";
 import { asClass, asValue, createContainer, InjectionMode, type AwilixContainer, type ResolveOptions } from "awilix";
 import { environment, healthcheckPort, sentryNodeOptions, sentryOptions, sentrySeverityLevel, skynexOptions, skynexSeverityLevel, terminalSeverityLevel } from "./app-configs.js";
 import { App } from "./app.js";
 import { ConfigDeployer, Deployers, IndexDeployer } from "./deployers/index.js";
-import { HealthcheckServer } from "./healthcheck/server.js";
 import { ArchiveInitiator, GameInitiator, IndexInitiator, Initiators, SummaryInitiator } from "./initiators/index.js";
+import { name, version } from "./metadata.js";
 import { namespaces } from "./namespaces.js";
 import { ConfigReporter, IndexReporter, Reporters } from "./reporters/index.js";
 import { ArchiveTemplatesWatcher, GameConfigsWatcher, IndexTemplatesWatcher, SummaryTemplatesWatcher, Watchers } from "./watchers/index.js";
@@ -99,6 +97,7 @@ export class Container {
     private registerHealthcheck() {
         this.container.register({
             healthcheckServer: asClass(HealthcheckServer).singleton(),
+            metadata: asValue({ name, version }),
             healthcheckPort: asValue(healthcheckPort),
         });
         return this;

@@ -1,4 +1,5 @@
-import type { BaseLogger } from "@ldb/base-logger";
+import type { BaseLogger } from "@ldb/logger";
+import { wait } from "@ldb/utils";
 import type { Deployers } from "./deployers/index.js";
 import type { Initiators } from "./initiators/index.js";
 import { name, version } from "./metadata.js";
@@ -7,15 +8,13 @@ import type { Watchers } from "./watchers/index.js";
 
 let exiting = false;
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export class App {
     constructor(
         private readonly watchers: Watchers,
         private readonly initiators: Initiators,
         private readonly deployers: Deployers,
         private readonly reporters: Reporters,
-        private readonly logger: BaseLogger
+        private readonly logger: BaseLogger,
     ) {
         this.selfBound();
         this.handleExceptions();
@@ -36,6 +35,7 @@ export class App {
     }
 
     private async handleUncaughtException(error: Error, origin: NodeJS.UncaughtExceptionOrigin) {
+        this.terminate();
         while (exiting) {
             await wait(1_000);
         }
@@ -48,6 +48,7 @@ export class App {
     }
 
     private async handleUnhandledRejection(reason: unknown, promise: Promise<unknown>) {
+        this.terminate();
         while (exiting) {
             await wait(5_000);
         }
@@ -81,5 +82,25 @@ export class App {
         this.logger.logWarning({ title: `${name}@${version}`, message: "App has been started." });
 
         this.watchers.gameConfigsWatcher.initiate();
+    }
+
+    private terminate() {
+        this.reporters.indexReporter.unsubscribe(this.deployers.indexDeployer);
+        this.reporters.configReporter.unsubscribe(this.deployers.configDeployer);
+
+        this.deployers.indexDeployer.unsubscribe(this.initiators.gameInitiator);
+        this.deployers.indexDeployer.unsubscribe(this.initiators.indexInitiator);
+
+        this.deployers.configDeployer.unsubscribe(this.initiators.gameInitiator);
+        this.deployers.configDeployer.unsubscribe(this.initiators.archiveInitiator);
+        this.deployers.configDeployer.unsubscribe(this.initiators.summaryInitiator);
+
+        this.initiators.gameInitiator.unsubscribe(this.watchers.indexTemplatesWatcher);
+        this.initiators.gameInitiator.unsubscribe(this.watchers.archiveTemplatesWatcher);
+        this.initiators.gameInitiator.unsubscribe(this.watchers.summaryTemplatesWatcher);
+
+        this.initiators.indexInitiator.unsubscribe(this.watchers.gameConfigsWatcher);
+        this.initiators.archiveInitiator.unsubscribe(this.watchers.gameConfigsWatcher);
+        this.initiators.summaryInitiator.unsubscribe(this.watchers.gameConfigsWatcher);
     }
 }

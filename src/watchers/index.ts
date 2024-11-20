@@ -8,7 +8,7 @@ export class Watchers {
         readonly gameConfigsWatcher: GameConfigsWatcher,
         readonly indexTemplatesWatcher: IndexTemplatesWatcher,
         readonly archiveTemplatesWatcher: ArchiveTemplatesWatcher,
-        readonly summaryTemplatesWatcher: SummaryTemplatesWatcher
+        readonly summaryTemplatesWatcher: SummaryTemplatesWatcher,
     ) {}
 }
 

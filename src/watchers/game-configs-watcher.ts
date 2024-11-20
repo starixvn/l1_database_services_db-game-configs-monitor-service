@@ -1,8 +1,8 @@
-import type { BaseLogger, Extras } from "@ldb/base-logger";
+import type { BaseLogger, Extras } from "@ldb/logger";
 import type { ChangeStreamDeleteDocument, ChangeStreamInsertDocument, ChangeStreamReplaceDocument, ChangeStreamUpdateDocument, Collection } from "@ldb/mongo";
-import { Watcher } from "../modules/watcher.js";
+import { subtractArrays } from "@ldb/utils";
+import { Watcher } from "@ldb/watcher";
 import type { GameConfigsSchema } from "../types/schema.js";
-import { intersectArrays } from "./watcher-utils.js";
 
 const UNAVAILABLE = { name: "<unavailable>", gameId: NaN, type: NaN } as const satisfies GameConfigsSchema;
 
@@ -30,7 +30,7 @@ export class GameConfigsWatcher extends Watcher<GameConfigEvents, GameConfigsSch
         let report = false;
         const extra: Extras = {};
 
-        const removed = intersectArrays(["name", "gameId", "type"], removedFields ?? []);
+        const removed = subtractArrays(["name", "gameId", "type"], removedFields ?? []);
         if (removed.length > 0) {
             extra.removedFields = removed;
             report = true;
@@ -93,7 +93,7 @@ export class GameConfigsWatcher extends Watcher<GameConfigEvents, GameConfigsSch
         const games = this.collection.find({}, { projection: { _id: 0, name: 1, gameId: 1, type: 1 } });
 
         for await (const { name, gameId, type } of games) {
-            this.emit<"INITIATE">("INITIATE", { name, gameId, type });
+            this.emit("INITIATE", { name, gameId, type });
         }
     }
 }
