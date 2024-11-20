@@ -36,7 +36,7 @@ export class ConfigInitiator<T extends Document> extends Dispatcher<ConfigEvents
     private async handleGameConfig(gameConfig: GameConfigsSchema, notify: boolean) {
         const { gameId, name, type } = gameConfig;
 
-        if (isGameExcluded(type, gameId)) {
+        if (isGameExcluded(type)) {
             return;
         }
 

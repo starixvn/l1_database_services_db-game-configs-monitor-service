@@ -20,8 +20,8 @@ export const parseIndexDefinition = (indexString: string): IndexDescription => {
     }
 };
 
-export const isGameExcluded = (type: GameConfigsSchema["type"], gameId: GameConfigsSchema["gameId"]) => {
-    if ([0, 1].includes(type) && gameId < 80) {
+export const isGameExcluded = (type: GameConfigsSchema["type"]) => {
+    if ([0, 1].includes(type)) {
         return true;
     }
 
