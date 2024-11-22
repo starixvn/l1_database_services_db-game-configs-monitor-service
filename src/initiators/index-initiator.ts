@@ -35,7 +35,7 @@ export class IndexInitiator extends Dispatcher<IndexEvents, GameConfigEvents, Ga
     }
 
     private async handleGameConfig(gameConfig: GameConfigsSchema, notify: boolean) {
-        if (isGameExcluded(gameConfig.type, gameConfig.gameId)) {
+        if (isGameExcluded(gameConfig.type)) {
             return;
         }
 

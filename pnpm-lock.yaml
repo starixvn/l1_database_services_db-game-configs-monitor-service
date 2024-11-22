@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@ldb/healthcheck':
-        specifier: 0.1.3
-        version: 0.1.3
+        specifier: 0.1.4
+        version: 0.1.4
       '@ldb/logger':
         specifier: 1.1.2
         version: 1.1.2
@@ -40,11 +40,11 @@ importers:
         specifier: 0.1.3
         version: 0.1.3(prettier@3.3.3)
       '@ldb/tsconfig':
-        specifier: 22.0.0
-        version: 22.0.0
+        specifier: 22.0.1
+        version: 22.0.1
       '@ldb/vitest-config':
-        specifier: 0.1.3
-        version: 0.1.3(@vitest/coverage-v8@2.1.5(vitest@2.1.5(@types/node@22.9.1)))(vitest@2.1.5(@types/node@22.9.1))
+        specifier: 0.1.4
+        version: 0.1.4(@vitest/coverage-v8@2.1.5(vitest@2.1.5(@types/node@22.9.1)))(vitest@2.1.5(@types/node@22.9.1))
       '@types/node':
         specifier: 22.9.1
         version: 22.9.1
@@ -55,7 +55,7 @@ importers:
         specifier: 9.15.0
         version: 9.15.0(jiti@1.21.6)
       prettier:
-        specifier: ^3.3.3
+        specifier: 3.3.3
         version: 3.3.3
       rimraf:
         specifier: 6.0.1
@@ -395,11 +395,8 @@ packages:
     peerDependencies:
       eslint: 9.15.x
 
-  '@ldb/healthcheck@0.1.3':
-    resolution: {integrity: sha512-52aceuVXInykTx502xiDwOWIjsT+hu3X7TepLpsGTzEB/nhr5v3TB+dunI3DoStUbyuS1SLYNMHzoBgGK5bvxA==}
-
-  '@ldb/logger@1.1.1':
-    resolution: {integrity: sha512-+ZhgMYzLHjSxTaqEyatASkJFHaA8AIssNra5eR+F62A2WEwLqyQMTNBqTEJSA9GHl7Zes0rpP9tvRa77WfURcA==}
+  '@ldb/healthcheck@0.1.4':
+    resolution: {integrity: sha512-8Mjtpkps6igW3tGNhNP4ZCu7EBpepnrEWYGT4xlSyqM0Z+lO+8kbCwDBoViWjHtXjqZ48qF2tHYT6H65b8oWMA==}
 
   '@ldb/logger@1.1.2':
     resolution: {integrity: sha512-RUgVCp799YbOmorRFhZKNLiZgV/twiLp60eaE2VrfDyvCHm0O8KXWkE5mDsb+AoIyj4cBlpG32prW2PnZy4w1Q==}
@@ -415,17 +412,14 @@ packages:
   '@ldb/sentry-logger@1.1.2':
     resolution: {integrity: sha512-X/V6D7F78mQmig09ed0yup0TQYDerZ07gqJCgdw3Tfs8telWCwchvUOxQwPcgf05zfg95giD3K4ZV+63YjyotA==}
 
-  '@ldb/skynex-logger@1.1.6':
-    resolution: {integrity: sha512-n+fpv44jOak5iCEaU7ess9NyVWRHKPOJIj4AqazgHsW75ef5fX0rWFsgcESFtHS3S1WZ49jHTLFUDwvSp2Pd4w==}
-
   '@ldb/skynex-logger@1.1.7':
     resolution: {integrity: sha512-QKTJMQ+Seq4D/Xbc3WKh3AofbDtxgQBVctSWaCxEmiQKWmFF/63p3A11CLgBSM4lPpSw/3yX/EbR0R8hfmgPrg==}
 
   '@ldb/terminal-logger@1.1.5':
     resolution: {integrity: sha512-Zkz6hSxW0VVDiTETEN1ykJ0Y4/T8RseBHx8n5Kh92mcF33N/ltRRyHuAfkL+qA/JwGpTDAsDeBxXZ/EWaTa7kg==}
 
-  '@ldb/tsconfig@22.0.0':
-    resolution: {integrity: sha512-pizr8b5r3EgPn1gW6chr6BKTzGE3bonr3gkoMp0lEJQcn0DYZ9hkbVTUPQ8VXR20fsNWzBBplB+qnDdU/aQtUg==}
+  '@ldb/tsconfig@22.0.1':
+    resolution: {integrity: sha512-QV2CQBfZo7tMfpiuWlNJaRl3GrPII3Ok6P6FKP3CVq+dcPXOTteL6tK0fzBCe9jRgSluTg+0/78Z2b8Up4tNrQ==}
 
   '@ldb/utils@0.3.1':
     resolution: {integrity: sha512-YZ9FwnZD5SuY4he6hakB4k/Pc3KDHeUe9IdR71WcqsmQRpOhQhe1ayd3gJOgka4vbD1wd+c040j/qyjqfVlYig==}
@@ -436,8 +430,8 @@ packages:
   '@ldb/utils@0.3.4':
     resolution: {integrity: sha512-iCWttrbA6AfY9sMvUHNfIgeGjUQeCPACv7DDuRh9eF0qkvQ8jzBCN9t+rQH8hqq8/t2DIi8GcKAY1ykt3NdgPA==}
 
-  '@ldb/vitest-config@0.1.3':
-    resolution: {integrity: sha512-F7HQyNvlrBQR1rLH9riOpZvm8v2JgHKdJb7uspGp/7h6OrDVc8n5mizTkK28WjhfaB/RlY6bYwvbXGrn9b0XQQ==}
+  '@ldb/vitest-config@0.1.4':
+    resolution: {integrity: sha512-WLrugHYNx1AWFKvBC/RpTZjiCBsy1NTSWmnZ4wgCH59zKTvuDtYl5fsMmaCqSaA+VqaodnAFdF00gM0BfzWrjQ==}
     peerDependencies:
       '@vitest/coverage-v8': 2.1.x
       vitest: 2.1.x
@@ -2134,19 +2128,9 @@ snapshots:
       - supports-color
       - typescript
 
-  '@ldb/healthcheck@0.1.3':
+  '@ldb/healthcheck@0.1.4':
     dependencies:
-      '@ldb/logger': 1.1.1
-    transitivePeerDependencies:
-      - debug
-      - supports-color
-
-  '@ldb/logger@1.1.1':
-    dependencies:
-      '@ldb/base-logger': 1.1.4
-      '@ldb/sentry-logger': 1.1.2
-      '@ldb/skynex-logger': 1.1.6
-      '@ldb/terminal-logger': 1.1.5
+      '@ldb/logger': 1.1.2
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -2188,15 +2172,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@ldb/skynex-logger@1.1.6':
-    dependencies:
-      '@ldb/base-logger': 1.1.4
-      '@ldb/utils': 0.3.1
-      axios: 1.7.7
-      axios-retry: 4.5.0(axios@1.7.7)
-    transitivePeerDependencies:
-      - debug
-
   '@ldb/skynex-logger@1.1.7':
     dependencies:
       '@ldb/base-logger': 1.1.4
@@ -2212,7 +2187,7 @@ snapshots:
       '@ldb/base-logger': 1.1.4
       '@ldb/utils': 0.3.1
 
-  '@ldb/tsconfig@22.0.0':
+  '@ldb/tsconfig@22.0.1':
     dependencies:
       '@tsconfig/node22': 22.0.0
 
@@ -2226,7 +2201,7 @@ snapshots:
     dependencies:
       '@ldb/base-logger': 1.1.4
 
-  '@ldb/vitest-config@0.1.3(@vitest/coverage-v8@2.1.5(vitest@2.1.5(@types/node@22.9.1)))(vitest@2.1.5(@types/node@22.9.1))':
+  '@ldb/vitest-config@0.1.4(@vitest/coverage-v8@2.1.5(vitest@2.1.5(@types/node@22.9.1)))(vitest@2.1.5(@types/node@22.9.1))':
     dependencies:
       '@vitest/coverage-v8': 2.1.5(vitest@2.1.5(@types/node@22.9.1))
       vitest: 2.1.5(@types/node@22.9.1)

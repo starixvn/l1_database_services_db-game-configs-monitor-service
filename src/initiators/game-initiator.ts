@@ -41,8 +41,8 @@ export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>,
         const games = this.getGameByType(type);
 
         const definitions: CollectionIndexesDefinition[] = [];
-        for await (const { gameId, name } of games) {
-            if (isGameExcluded(type, gameId)) {
+        for await (const { name } of games) {
+            if (isGameExcluded(type)) {
                 continue;
             }
 
@@ -75,7 +75,7 @@ export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>,
 
         const definitions = [];
         for await (const { gameId, name } of games) {
-            if (isGameExcluded(type, gameId)) {
+            if (isGameExcluded(type)) {
                 continue;
             }
 
