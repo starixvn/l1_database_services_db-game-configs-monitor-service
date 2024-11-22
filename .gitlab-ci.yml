@@ -1,5 +1,5 @@
 variables:
-  NODEJS_IMAGE: FROM hub.lumigame.com/ldb/node-base:22 AS base
+  NODEJS_IMAGE: hub.lumigame.com/ldb/node-base:22
 
 include:
   - project: ci/core-cicd
