@@ -48,16 +48,15 @@ export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
                         } else {
                             await this.dropIndex(namespace, index.key);
                         }
-                        break;
+                        return await this.createIndex(namespace, index);
                     }
                     case "IndexKeySpecsConflict":
                         this.logger.logDebug({ title: `${this.className}@deployIndex`, message: error.codeName }, { extra: { namespace, index } });
                         if (index.name) {
                             await this.dropIndex(namespace, index.name);
                         }
-                        break;
+                        return await this.createIndex(namespace, index);
                 }
-                return await this.createIndex(namespace, index);
             }
             this.logger.logError({ title: `${this.className}@deployIndex`, message: error }, { extra: { namespace, index } });
         }
