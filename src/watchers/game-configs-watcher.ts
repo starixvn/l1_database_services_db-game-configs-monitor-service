@@ -28,31 +28,35 @@ export class GameConfigsWatcher extends Watcher<GameConfigEvents, GameConfigsSch
         const { updatedFields, removedFields } = updateDescription;
 
         let report = false;
-        const extra: Extras = {};
+        const updated: Extras = {};
 
         const removed = subtractArrays(["name", "gameId", "type"], removedFields ?? []);
         if (removed.length > 0) {
-            extra.removedFields = removed;
+            updated.removedFields = removed;
             report = true;
         }
 
         const { name: updatedName, gameId: updatedGameId, type: updatedType } = updatedFields ?? {};
         const { name, gameId, type } = fullDocumentBeforeChange ?? UNAVAILABLE;
         if (updatedName != null) {
-            extra.name = { before: name, after: updatedName };
+            updated.name = { before: name, after: updatedName };
             report = true;
         }
         if (updatedGameId != null) {
-            extra.gameId = { before: gameId, after: updatedGameId };
+            updated.gameId = { before: gameId, after: updatedGameId };
             report = true;
         }
         if (updatedType != null) {
-            extra.type = { before: type, after: updatedType };
+            updated.type = { before: type, after: updatedType };
             report = true;
         }
 
+        updated.name = updated.name || name;
+        updated.gameId = updated.gameId || gameId;
+        updated.type = updated.type || type;
+
         if (report) {
-            this.logger.logWarning({ title: this.className, message: "Dangerous update detected" }, { extra });
+            this.logger.logWarning({ title: this.className, message: "Dangerous update detected" }, { extra: { updated } });
         }
     }
 
@@ -62,23 +66,27 @@ export class GameConfigsWatcher extends Watcher<GameConfigEvents, GameConfigsSch
         const { name: updatedName, gameId: updatedGameId, type: updatedType } = fullDocument;
 
         let report = false;
-        const extra: Extras = {};
+        const replaced: Extras = {};
 
         if (name !== updatedName) {
-            extra.name = { before: name, after: updatedName };
+            replaced.name = { before: name, after: updatedName };
             report = true;
         }
         if (gameId !== updatedGameId) {
-            extra.gameId = { before: gameId, after: updatedGameId };
+            replaced.gameId = { before: gameId, after: updatedGameId };
             report = true;
         }
         if (type !== updatedType) {
-            extra.type = { before: type, after: updatedType };
+            replaced.type = { before: type, after: updatedType };
             report = true;
         }
 
+        replaced.name = replaced.name || name;
+        replaced.gameId = replaced.gameId || gameId;
+        replaced.type = replaced.type || type;
+
         if (report) {
-            this.logger.logWarning({ title: this.className, message: "Dangerous replace detected" }, { extra });
+            this.logger.logWarning({ title: this.className, message: "Dangerous replace detected" }, { extra: { replaced } });
         }
     }
 
@@ -86,7 +94,7 @@ export class GameConfigsWatcher extends Watcher<GameConfigEvents, GameConfigsSch
         const { fullDocumentBeforeChange } = changeDocument;
         const { name, gameId, type } = fullDocumentBeforeChange ?? UNAVAILABLE;
 
-        this.logger.logWarning({ title: this.className, message: "Dangerous delete detected" }, { extra: { document: { name, gameId, type } } });
+        this.logger.logWarning({ title: this.className, message: "Dangerous delete detected" }, { extra: { deleted: { name, gameId, type } } });
     }
 
     async initiate() {
