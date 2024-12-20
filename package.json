@@ -24,26 +24,26 @@
   ],
   "packageManager": "pnpm@9.14.1",
   "dependencies": {
-    "@ldb/healthcheck": "0.1.4",
-    "@ldb/logger": "1.1.2",
-    "@ldb/mongo": "6.10.3",
-    "@ldb/utils": "0.3.4",
-    "@ldb/watcher": "0.1.0",
-    "awilix": "12.0.3"
+    "@ldb/healthcheck": "0.1.5",
+    "@ldb/logger": "1.1.3",
+    "@ldb/mongo": "6.10.4",
+    "@ldb/utils": "0.3.5",
+    "@ldb/watcher": "0.1.1",
+    "awilix": "12.0.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.6.0",
+    "@commitlint/cli": "19.6.1",
     "@commitlint/config-conventional": "19.6.0",
-    "@ldb/eslint-config": "0.2.4",
-    "@ldb/prettier-config": "0.1.3",
+    "@ldb/eslint-config": "0.2.5",
+    "@ldb/prettier-config": "0.1.4",
     "@ldb/tsconfig": "22.0.1",
-    "@ldb/vitest-config": "0.1.4",
-    "@types/node": "22.9.3",
-    "@vitest/coverage-v8": "2.1.5",
-    "eslint": "9.15.0",
-    "prettier": "3.3.3",
+    "@ldb/vitest-config": "0.1.5",
+    "@types/node": "22.10.2",
+    "@vitest/coverage-v8": "2.1.8",
+    "eslint": "9.17.0",
+    "prettier": "3.4.2",
     "rimraf": "6.0.1",
     "typescript": "5.7.2",
-    "vitest": "2.1.5"
+    "vitest": "2.1.8"
   }
 }
