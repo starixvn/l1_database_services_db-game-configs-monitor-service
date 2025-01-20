@@ -55,7 +55,6 @@ export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
                         this.logger.logDebug({ title: `${this.className}@deployIndex`, message: error.codeName }, { extra: { namespace, index } });
 
                         const [, existingName] = /name: "([^"]*)"/.exec(error.message) || [];
-                        this.logger.logError({ title: `${this.className}@deployIndex`, message: error.message }, { extra: { existingName, namespace, index } });
                         if (existingName) {
                             await this.dropIndex(namespace, existingName);
                         } else if (index.name) {
