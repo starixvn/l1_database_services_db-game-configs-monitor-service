@@ -43,6 +43,7 @@ export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
                     case "IndexOptionsConflict": {
                         this.logger.logDebug({ title: `${this.className}@deployIndex`, message: error.codeName }, { extra: { namespace, index } });
                         const [, existingName] = /name: (.*)$/.exec(error.message) || [];
+
                         if (existingName) {
                             await this.dropIndex(namespace, existingName);
                         } else {
@@ -52,11 +53,15 @@ export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
                     }
                     case "IndexKeySpecsConflict": {
                         this.logger.logDebug({ title: `${this.className}@deployIndex`, message: error.codeName }, { extra: { namespace, index } });
-                        const [, existingName] = /name: "([^"]*)"$/.exec(error.message) || [];
+
+                        const [, existingName] = /name: "([^"]*)"/.exec(error.message) || [];
+                        this.logger.logError({ title: `${this.className}@deployIndex`, message: error.message }, { extra: { existingName, namespace, index } });
                         if (existingName) {
                             await this.dropIndex(namespace, existingName);
                         } else if (index.name) {
                             await this.dropIndex(namespace, index.name);
+                        } else {
+                            await this.dropIndex(namespace, index.key);
                         }
                         return await this.createIndex(namespace, index);
                     }
