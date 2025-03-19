@@ -57,7 +57,7 @@ export class ConfigInitiator<T extends Document> extends Dispatcher<ConfigEvents
             const { id = 0 } = config;
             const definition = { ...config, ...metadata, id };
             const data = Object.assign({}, { _id: { gameConfigs, id } }, definition);
-            this.emit<"deployConfig">("deployConfig", this.configType, target, { gameConfigs, id }, data, notify);
+            this.emit<"deployConfig">("deployConfig", this.configType, target, { _id: { gameConfigs, id } }, data, notify);
         }
     }
 
