@@ -1,7 +1,7 @@
 import type { ChangeStreamNameSpace, IndexDescription } from "@ldb/mongo";
 import { describe, expect, it } from "vitest";
 import type { TemplateNamespace } from "../types/schema.js";
-import { INVALID_INDEX, isGameExcluded, mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator-utils.js";
+import { INVALID_INDEX, mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator-utils.js";
 
 describe("[function mapNamespace]", () => {
     it("coll = baseName + postfix", () => {
@@ -50,23 +50,6 @@ describe("[function parseIndexDefinition]", () => {
         const testCases: [string, IndexDescription][] = [['{"key":{}}', INVALID_INDEX]];
         for (const [indexString, expectResult] of testCases) {
             expect(parseIndexDefinition(indexString)).not.toBe(expectResult);
-        }
-    });
-});
-
-describe("[function isGameExcluded]", () => {
-    it("Invalid strings", () => {
-        const testCases: { type: number; expected: boolean }[] = [
-            { type: 0, expected: true },
-            { type: 1, expected: true },
-            { type: 2, expected: false },
-            { type: 3, expected: false },
-            { type: 4, expected: false },
-            { type: 5, expected: false },
-            { type: 6, expected: false },
-        ];
-        for (const { type, expected } of testCases) {
-            expect(isGameExcluded(type)).toBe(expected);
         }
     });
 });

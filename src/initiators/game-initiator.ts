@@ -5,7 +5,7 @@ import type { ConfigMetadata, ConfigTemplateSchema, GameConfigsSchema, IndexTemp
 import type { ConfigTemplateEvents, IndexTemplateEvents } from "../watchers/index.js";
 import { ConfigTemplatesWatcher, IndexTemplatesWatcher } from "../watchers/index.js";
 import type { CollectionIndexesDefinition, ConfigEvents, IndexEvents } from "./index.js";
-import { isGameExcluded, mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator-utils.js";
+import { mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator-utils.js";
 
 type Events<T extends Document> = IndexTemplateEvents | ConfigTemplateEvents<T>;
 
@@ -42,10 +42,6 @@ export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>,
 
         const definitions: CollectionIndexesDefinition[] = [];
         for await (const { name } of games) {
-            if (isGameExcluded(type)) {
-                continue;
-            }
-
             for (const { ns, idxs } of colls) {
                 const namespace = mapNamespace(ns, name);
                 const indexes: IndexDescription[] = Object.values(idxs).map(parseIndexDefinition).filter(notInvalidIndex);
@@ -75,10 +71,6 @@ export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>,
 
         const definitions = [];
         for await (const { gameId, name } of games) {
-            if (isGameExcluded(type)) {
-                continue;
-            }
-
             const metadata: ConfigMetadata = {
                 gameConfigs: { gameId, name },
                 category,
