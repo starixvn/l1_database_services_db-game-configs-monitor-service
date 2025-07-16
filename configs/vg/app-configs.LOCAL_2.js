@@ -1,33 +1,39 @@
+/** @typedef {import("@ldb/logger").LumiLoggerConfig} LumiLoggerConfig */
+
 import { name, version } from "./metadata.js";
 
 export const environment = "VG-LOCAL-2";
 export const healthcheckPort = 5000;
 
-export const sentrySeverityLevel = "warning";
-export const sentryNodeOptions = {
-    dsn: "https://be2c83ae1b01424ab32f27411f22f8c5@sentry.lumigame.com/77",
+export const lumiLoggerConfig = {
+    sentryNodeOptions: {
+        dsn: "https://d6f025dd4f7c1eb4de459a6257f494d1@sentry-k8s.lumigame.com/22",
+        environment,
+        initialScope: {
+            tags: { service: name },
+        },
+        release: `${name}@${version}`,
+    },
+    skynexOptions: {
+        conversationIds: {
+            telegram: -1001604444158,
+            slack: "B08GPPK88MS:T08ACMHMMFS:C091FAL49UG",
+        },
+    },
     environment,
-    initialScope: {
-        tags: { service: name },
-    },
-    release: `${name}@${version}`,
-};
-export const sentryOptions = {};
-
-export const skynexSeverityLevel = "warning";
-export const skynexOptions = {
-    conversationIds: {
-        telegram: -1001806296262,
-        teams: "19:b922d6e3550145368d69cfb67fc8d471@thread.tacv2",
-    },
 };
 
-export const terminalSeverityLevel = "log";
-
-const dbCred = "lmn_backend:LmnBackend";
-const dbSrv = "10.10.50.12:39202,10.10.50.13:39202,10.10.50.14:39202";
-const dbRepl = "L2ppLocal";
+const mongoCred = "lmn_backend:LmnBackend";
+const mongoSrv = "10.10.50.12:39202,10.10.50.13:39202,10.10.50.14:39202";
+const mongoRepl = "L2ppLocal";
 
 export const database = {
-    targetUrl: `mongodb://${dbCred}@${dbSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}&replicaSet=${dbRepl}`,
+    mongoURI: `mongodb://${mongoCred}@${mongoSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}&replicaSet=${mongoRepl}`,
+};
+
+export const namespaces = {
+    gameConfigsCollection: { db: "minigame", coll: "game_configs" },
+    indexTemplatesCollection: { db: "ops_configs", coll: "index_templates" },
+    archiveTemplatesCollection: { db: "ops_configs", coll: "archive_templates" },
+    summaryTemplatesCollection: { db: "ops_configs", coll: "summary_templates" },
 };

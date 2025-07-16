@@ -4,7 +4,7 @@ import { Dispatcher } from "@ldb/utils";
 import { CATEGORY as category } from "../constants.js";
 import type { GameConfigsSchema, IndexTemplatesSchema } from "../types/schema.js";
 import type { GameConfigEvents, GameConfigsWatcher } from "../watchers/index.js";
-import { isGameExcluded, mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator-utils.js";
+import { mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator-utils.js";
 
 export type CollectionIndexesDefinition = { ns: ChangeStreamNameSpace; idxs: IndexDescription[] };
 
@@ -35,10 +35,6 @@ export class IndexInitiator extends Dispatcher<IndexEvents, GameConfigEvents, Ga
     }
 
     private async handleGameConfig(gameConfig: GameConfigsSchema, notify: boolean) {
-        if (isGameExcluded(gameConfig.type)) {
-            return;
-        }
-
         const definition = await this.getIndexDefinition(gameConfig);
 
         if (!definition) {
