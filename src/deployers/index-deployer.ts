@@ -12,7 +12,7 @@ export type IndexDeployEvents = {
 
 export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
     constructor(
-        private readonly targetMongo: MongoClient,
+        private readonly mongo: MongoClient,
         logger: BaseLogger,
     ) {
         super(logger);
@@ -80,12 +80,12 @@ export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
 
     private async dropIndex(namespace: ChangeStreamNameSpace, index: IndexDescription["key"] | string) {
         const { db, coll } = namespace;
-        return await this.targetMongo.db(db).command({ dropIndexes: coll, index });
+        return await this.mongo.db(db).command({ dropIndexes: coll, index });
     }
 
     private getCollection<T extends Document>(namespace: ChangeStreamNameSpace): Collection<T> {
         const { db, coll } = namespace;
-        return this.targetMongo.db(db).collection<T>(coll);
+        return this.mongo.db(db).collection<T>(coll);
     }
 
     subscribe(publisher: Initiators): boolean {

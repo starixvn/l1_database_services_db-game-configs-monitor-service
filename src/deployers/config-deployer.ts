@@ -12,7 +12,7 @@ export type ConfigDeployEvents = {
 
 export class ConfigDeployer<T extends Document> extends Dispatcher<ConfigDeployEvents, ConfigEvents<T>> {
     constructor(
-        private readonly targetMongo: MongoClient,
+        private readonly mongo: MongoClient,
         logger: BaseLogger,
     ) {
         super(logger);
@@ -39,7 +39,7 @@ export class ConfigDeployer<T extends Document> extends Dispatcher<ConfigDeployE
 
     private getCollection<X extends Document>(namespace: ChangeStreamNameSpace): Collection<X> {
         const { db, coll } = namespace;
-        return this.targetMongo.db(db).collection<X>(coll);
+        return this.mongo.db(db).collection<X>(coll);
     }
 
     subscribe(publisher: Initiators<T>): boolean {

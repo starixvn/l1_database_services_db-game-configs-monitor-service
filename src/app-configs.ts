@@ -1,34 +1,40 @@
-import type { NodeOptions, SentryOptions, SeverityLevel, SkynexOptions } from "@ldb/logger";
+import type { LumiLoggerConfig } from "@ldb/logger";
+import type { ChangeStreamNameSpace } from "@ldb/mongo";
 import { name, version } from "./metadata.js";
 
 export const environment = "DEV" as const;
 export const healthcheckPort = 5000 as const;
 
-export const sentrySeverityLevel = "warning" as const satisfies SeverityLevel;
-export const sentryNodeOptions = {
-    dsn: "https://098a0c6ad1d74e8eb39ec7df895e59e0@sentry.lumigame.com/76",
+export const lumiLoggerConfig = {
+    sentryNodeOptions: {
+        dsn: "https://e83926b2bc60caab91f825f6fce3d658@sentry-k8s.lumigame.com/24",
+        environment,
+        initialScope: {
+            tags: { service: name },
+        },
+        release: `${name}@${version}`,
+    },
+    skynexOptions: {
+        conversationIds: {
+            telegram: -1001911631568,
+            slack: "B08GPPK88MS:T08ACMHMMFS:C090SSUCJ10",
+        },
+    },
     environment,
-    initialScope: {
-        tags: { service: name },
-    },
-    release: `${name}@${version}`,
-} as const satisfies NodeOptions;
-export const sentryOptions = {} as const satisfies SentryOptions;
+    terminalSeverityLevel: "debug",
+} as const satisfies LumiLoggerConfig;
 
-export const skynexSeverityLevel = "warning" as const satisfies SeverityLevel;
-export const skynexOptions = {
-    conversationIds: {
-        telegram: -1001911631568,
-        teams: "19:11eb3bf6c3c240fd993eb8048615835c@thread.tacv2",
-    },
-} as const satisfies SkynexOptions;
-
-export const terminalSeverityLevel = "debug" as const satisfies SeverityLevel;
-
-const dbCred = "lmn_backend:LmnBackend" as const;
-const dbSrv = "10.10.50.12:39103,10.10.50.13:39103,10.10.50.14:39103" as const;
-const dbRepl = "L1pppLocal" as const;
+const mongoCred = "lmn_backend:LmnBackend" as const;
+const mongoSrv = "10.10.50.12:39100,10.10.50.13:39100,10.10.50.14:39100" as const;
+const mongoRepl = "L1Local" as const;
 
 export const database = {
-    targetUrl: `mongodb://${dbCred}@${dbSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}-DEV&replicaSet=${dbRepl}`,
+    mongoURI: `mongodb://${mongoCred}@${mongoSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}&replicaSet=${mongoRepl}`,
 } as const;
+
+export const namespaces = {
+    gameConfigsCollection: { db: "minigame", coll: "game_configs" },
+    indexTemplatesCollection: { db: "ops_configs", coll: "index_templates" },
+    archiveTemplatesCollection: { db: "ops_configs", coll: "archive_templates" },
+    summaryTemplatesCollection: { db: "ops_configs", coll: "summary_templates" },
+} as const satisfies Record<string, ChangeStreamNameSpace>;
