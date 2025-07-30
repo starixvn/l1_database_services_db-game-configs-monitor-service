@@ -33,7 +33,7 @@ export const database = {
 
 export const namespaces = {
     gameConfigsCollection: { db: "hotdog_minigame", coll: "game_configs" },
-    indexTemplatesCollection: { db: "ops_configs", coll: "index_templates" },
-    archiveTemplatesCollection: { db: "ops_configs", coll: "archive_templates" },
-    summaryTemplatesCollection: { db: "ops_configs", coll: "summary_templates" },
+    indexTemplatesCollection: { db: "hotdog_ops_configs", coll: "index_templates" },
+    archiveTemplatesCollection: { db: "hotdog_ops_configs", coll: "archive_templates" },
+    summaryTemplatesCollection: { db: "hotdog_ops_configs", coll: "summary_templates" },
 };
