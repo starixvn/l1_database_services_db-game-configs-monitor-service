@@ -23,7 +23,7 @@ export const lumiLoggerConfig = {
     environment,
 };
 
-const mongoCred = "lmn_backend:LmnBackend";
+const mongoCred = "hotdog_backend:HotdogBackend";
 const mongoSrv = "10.10.50.12:39400,10.10.50.13:39400,10.10.50.14:39400";
 const mongoRepl = "SPLocal0";
 
