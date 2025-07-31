@@ -2,12 +2,12 @@
 
 import { name, version } from "./metadata.js";
 
-export const environment = "HD-SIT";
+export const environment = "HD-MIS-SIT";
 export const healthcheckPort = 5000;
 
 export const lumiLoggerConfig = {
     sentryNodeOptions: {
-        dsn: "",
+        dsn: "https://9e03285f9c3ff7b4b44903dd009f49dd@sentry-kl.sgamesuat.com/22",
         environment,
         initialScope: {
             tags: { service: name },
@@ -23,7 +23,7 @@ export const lumiLoggerConfig = {
     environment,
 };
 
-const mongoCred = "hotdog_backend:Backend%40517";
+const mongoCred = "hotdog_backend:HotdogBackend%40517";
 const mongoSrv = "172.16.4.111:35301";
 const mongoRepl = "SP-SIT";
 
