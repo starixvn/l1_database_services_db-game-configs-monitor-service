@@ -16,7 +16,7 @@ export const lumiLoggerConfig = {
     },
     skynexOptions: {
         conversationIds: {
-            telegram: -1001964283718,
+            telegram: -1002034115006,
             slack: "B08GPPK88MS:T08ACMHMMFS:C090ALHP2DD",
         },
         proxy: {
