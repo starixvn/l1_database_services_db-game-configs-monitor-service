@@ -7,7 +7,7 @@ export const healthcheckPort = 5000;
 
 export const lumiLoggerConfig = {
     sentryNodeOptions: {
-        dsn: "http://6dedea44b8f8e60b6519ff864484357a@sentrypro-sc.ops-kluat.gamora.prod/20",
+        dsn: "http://6dedea44b8f8e60b6519ff864484357a@sentrysc.ops-kluat.gamora.prod/20",
         environment,
         initialScope: {
             tags: { service: name },
