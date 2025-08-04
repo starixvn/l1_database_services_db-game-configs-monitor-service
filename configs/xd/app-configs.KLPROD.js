@@ -1,8 +1,9 @@
 /** @typedef {import("@ldb/logger").LumiLoggerConfig} LumiLoggerConfig */
+/** @typedef {import("@ldb/mongo").ChangeStreamNameSpace} ChangeStreamNameSpace */
 
 import { name, version } from "./metadata.js";
 
-export const environment = "XD-KLPROD";
+export const environment = "XD-KL-PROD";
 export const healthcheckPort = 5000;
 
 export const lumiLoggerConfig = {
@@ -29,13 +30,14 @@ export const lumiLoggerConfig = {
 };
 
 const mongoCred = "lmn_backend:%51%37%34%7e%54%30%76%4b%36%25%67%4d%4f%3a%49%49%60%4c%5d%4d%78%63%2c%52%5e%28%49%68%78%70%41%74";
-const mongoSrv = "10.146.34.26:39410,10.146.34.27:39410,10.146.34.30:39410";
+const mongoSrv = "10.146.34.26:39410,10.146.34.27:39410,10.146.34.30:39410,10.146.34.28:39410";
 const mongoRepl = "SN-Main";
 
 export const database = {
     mongoURI: `mongodb://${mongoCred}@${mongoSrv}/admin?authSource=admin&appName=${encodeURIComponent(name)}&replicaSet=${mongoRepl}`,
 };
 
+/** @type {Record<string, ChangeStreamNameSpace>} */
 export const namespaces = {
     gameConfigsCollection: { db: "minigame", coll: "game_configs" },
     indexTemplatesCollection: { db: "ops_configs", coll: "index_templates" },

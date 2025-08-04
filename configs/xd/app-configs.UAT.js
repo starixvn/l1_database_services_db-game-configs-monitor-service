@@ -2,12 +2,12 @@
 
 import { name, version } from "./metadata.js";
 
-export const environment = "XD-UAT";
+export const environment = "XD-KL-UAT";
 export const healthcheckPort = 5000;
 
 export const lumiLoggerConfig = {
     sentryNodeOptions: {
-        dsn: "http://f104ec9eef9d9105c0c848525a68a107@sentryuat-sc.nebula.prod/23",
+        dsn: "http://21ae56685b792a67a38aa9ce7f2716cb@sentrysc.ops-kluat.gamora.prod/21",
         environment,
         initialScope: {
             tags: { service: name },
@@ -21,7 +21,7 @@ export const lumiLoggerConfig = {
         },
         proxy: {
             protocol: "http",
-            host: "lisasqd.nebula.prod",
+            host: "iusqd.gamora.prod",
             port: 8801,
         },
     },
@@ -29,7 +29,7 @@ export const lumiLoggerConfig = {
 };
 
 const mongoCred = "lmn_backend:%4c%6d%6e%42%61%63%6b%65%6e%64%40%32%32%30%32%37";
-const mongoSrv = "10.99.99.53:39420,10.99.99.54:39420,10.99.99.188:39420";
+const mongoSrv = "10.146.34.28:39420";
 const mongoRepl = "SN-UAT";
 
 export const database = {
