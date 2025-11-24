@@ -6,7 +6,7 @@ import type { ConfigMetadata, ConfigSchema, ConfigTemplateSchema, GameConfigsSch
 import type { GameConfigEvents, GameConfigsWatcher } from "../watchers/index.js";
 
 export type ConfigEvents<T extends Document> = {
-    deployConfig: (type: string, namespace: ChangeStreamNameSpace, filter: Document, data: ConfigSchema<T>, notify: boolean) => Promise<void>;
+    deployConfig: (configType: string, namespace: ChangeStreamNameSpace, filter: Document, data: ConfigSchema<T>, notify: boolean, type: number) => Promise<void>;
 };
 
 export class ConfigInitiator<T extends Document> extends Dispatcher<ConfigEvents<T>, GameConfigEvents> {
@@ -50,14 +50,14 @@ export class ConfigInitiator<T extends Document> extends Dispatcher<ConfigEvents
     }
 
     private async emitDataForEachTarget(target: ChangeStreamNameSpace, metadata: ConfigMetadata, configDefinition: ConfigTemplateSchema<T>, notify: boolean) {
-        const { data } = configDefinition;
+        const { data, type } = configDefinition;
         const { gameConfigs } = metadata;
 
         for (const config of data) {
             const { id = 0 } = config;
             const definition = { ...config, ...metadata, id };
             const data = Object.assign({}, { _id: { gameConfigs, id } }, definition);
-            this.emit<"deployConfig">("deployConfig", this.configType, target, { _id: { gameConfigs, id } }, data, notify);
+            this.emit<"deployConfig">("deployConfig", this.configType, target, { _id: { gameConfigs, id } }, data, notify, type);
         }
     }
 

@@ -7,7 +7,7 @@ import { generateIndexName } from "./indexer-utils.js";
 type Initiators = IndexInitiator | GameInitiator<Document>;
 
 export type IndexDeployEvents = {
-    INDEXED: (namespace: string, indexName: string) => void;
+    INDEXED: (namespace: string, indexName: string, type: number) => void;
 };
 
 export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
@@ -23,13 +23,13 @@ export class IndexDeployer extends Dispatcher<IndexDeployEvents, IndexEvents> {
         this.deployIndexes = this.deployIndexes.bind(this);
     }
 
-    private async deployIndexes(namespace: ChangeStreamNameSpace, indexes: IndexDescription[], notify: boolean) {
+    private async deployIndexes(namespace: ChangeStreamNameSpace, indexes: IndexDescription[], notify: boolean, type: number) {
         for (const index of indexes) {
             const deployedIndexName = await this.deployIndex(namespace, index);
             const collectionNamespace = `${namespace.db}.${namespace.coll}`;
             this.logger.logDebug({ title: `${this.className}@deployIndex`, message: `${collectionNamespace} - ${deployedIndexName}` });
             if (notify) {
-                this.emit<"INDEXED">("INDEXED", collectionNamespace, deployedIndexName);
+                this.emit<"INDEXED">("INDEXED", collectionNamespace, deployedIndexName, type);
             }
         }
     }

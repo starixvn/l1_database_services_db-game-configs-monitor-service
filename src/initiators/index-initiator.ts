@@ -9,7 +9,7 @@ import { mapNamespace, notInvalidIndex, parseIndexDefinition } from "./initiator
 export type CollectionIndexesDefinition = { ns: ChangeStreamNameSpace; idxs: IndexDescription[] };
 
 export type IndexEvents = {
-    deployIndex: (namespace: ChangeStreamNameSpace, descriptions: IndexDescription[], notify: boolean) => Promise<void>;
+    deployIndex: (namespace: ChangeStreamNameSpace, descriptions: IndexDescription[], notify: boolean, type: number) => Promise<void>;
 };
 
 export class IndexInitiator extends Dispatcher<IndexEvents, GameConfigEvents, GameConfigsWatcher> {
@@ -35,13 +35,14 @@ export class IndexInitiator extends Dispatcher<IndexEvents, GameConfigEvents, Ga
     }
 
     private async handleGameConfig(gameConfig: GameConfigsSchema, notify: boolean) {
+        const { type } = gameConfig;
         const definition = await this.getIndexDefinition(gameConfig);
 
         if (!definition) {
             return;
         }
         for (const { ns, idxs } of definition) {
-            this.emit<"deployIndex">("deployIndex", ns, idxs, notify);
+            this.emit<"deployIndex">("deployIndex", ns, idxs, notify, type);
         }
     }
 

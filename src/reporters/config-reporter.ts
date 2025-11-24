@@ -8,9 +8,9 @@ type Result = { upsertedCount: number; modifiedCount: number };
 
 const formatMap = (list: Map<string, Result>) => {
     const lines: string[] = [];
-    for (const [gameName, gameCounter] of list) {
+    for (const [gameKey, gameCounter] of list) {
         const { upsertedCount, modifiedCount } = gameCounter;
-        lines.push(`    **${gameName}**  I-${upsertedCount} M-${modifiedCount}`);
+        lines.push(`    **${gameKey}**  I-${upsertedCount} M-${modifiedCount}`);
     }
     return lines.join("  \n");
 };
@@ -29,19 +29,20 @@ export class ConfigReporter extends Subscriber<ConfigDeployEvents> {
         this.reportConfig = this.reportConfig.bind(this);
     }
 
-    private async reportConfig(configType: string, gameName: string, upsertedCount = 0, modifiedCount = 0) {
+    private async reportConfig(configType: string, gameName: string, upsertedCount = 0, modifiedCount = 0, type: number) {
         while (this.sending) {
             await wait(1_000);
         }
 
         const config = this.configs.get(configType);
+        const gameKey = `${type}-${gameName}`;
 
         if (!config) {
-            this.configs.set(configType, new Map([[gameName, { upsertedCount, modifiedCount }]]));
+            this.configs.set(configType, new Map([[gameKey, { upsertedCount, modifiedCount }]]));
         } else {
-            const gameCounter = config.get(gameName);
+            const gameCounter = config.get(gameKey);
             if (!gameCounter) {
-                config.set(gameName, { upsertedCount, modifiedCount });
+                config.set(gameKey, { upsertedCount, modifiedCount });
             } else {
                 gameCounter.upsertedCount += upsertedCount;
                 gameCounter.modifiedCount += modifiedCount;

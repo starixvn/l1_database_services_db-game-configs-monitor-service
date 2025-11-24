@@ -25,17 +25,18 @@ export class IndexReporter extends Subscriber<IndexDeployEvents> {
         this.reportIndex = this.reportIndex.bind(this);
     }
 
-    private async reportIndex(namespace: string, indexName: string) {
+    private async reportIndex(namespace: string, indexName: string, type: number) {
         while (this.sending) {
             await wait(1_000);
         }
 
         const [group, item] = namespace.split("_");
 
-        const groupList = this.indexes.get(group);
+        const groupKey = `${type}-${group}`;
+        const groupList = this.indexes.get(groupKey);
 
         if (!groupList) {
-            this.indexes.set(group, new Map([[item, new Set([indexName])]]));
+            this.indexes.set(groupKey, new Map([[item, new Set([indexName])]]));
         } else {
             const indexList = groupList.get(item);
             if (!indexList) {

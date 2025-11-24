@@ -30,9 +30,10 @@ export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>,
     }
 
     private async handleIndex(indexTemplate: IndexTemplatesSchema) {
+        const { type } = indexTemplate;
         const definitions = await this.getIndexDefinition(indexTemplate);
         for (const { ns, idxs } of definitions) {
-            this.emit<"deployIndex">("deployIndex", ns, idxs, true);
+            this.emit<"deployIndex">("deployIndex", ns, idxs, true, type);
         }
     }
 
@@ -53,14 +54,14 @@ export class GameInitiator<T extends Document> extends Dispatcher<GameEvents<T>,
     }
 
     private async handleConfig(configType: string, configTemplate: ConfigTemplateSchema<T>) {
-        const { targets } = configTemplate;
+        const { targets, type } = configTemplate;
         const definitions = await this.getConfigDefinition(configTemplate);
 
         for (const target of targets) {
             for (const definition of definitions) {
                 const { gameConfigs, id } = definition;
                 const data = Object.assign({}, { _id: { gameConfigs, id } }, definition);
-                this.emit<"deployConfig">("deployConfig", configType, target, { gameConfigs, id }, data, true);
+                this.emit<"deployConfig">("deployConfig", configType, target, { gameConfigs, id }, data, true, type);
             }
         }
     }

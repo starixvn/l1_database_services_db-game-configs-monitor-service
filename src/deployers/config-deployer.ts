@@ -7,7 +7,7 @@ import type { ConfigSchema } from "../types/schema.js";
 type Initiators<T extends Document> = ConfigInitiator<T> | GameInitiator<T>;
 
 export type ConfigDeployEvents = {
-    CONFIGURED: (configType: string, gameName: string, upsertedCount: number, modifiedCount: number) => void;
+    CONFIGURED: (configType: string, gameName: string, upsertedCount: number, modifiedCount: number, type: number) => void;
 };
 
 export class ConfigDeployer<T extends Document> extends Dispatcher<ConfigDeployEvents, ConfigEvents<T>> {
@@ -23,17 +23,17 @@ export class ConfigDeployer<T extends Document> extends Dispatcher<ConfigDeployE
         this.deployConfigs = this.deployConfigs.bind(this);
     }
 
-    private async deployConfigs(type: string, namespace: ChangeStreamNameSpace, filter: Document, data: ConfigSchema<T>, notify: boolean) {
+    private async deployConfigs(configType: string, namespace: ChangeStreamNameSpace, filter: Document, data: ConfigSchema<T>, notify: boolean, type: number) {
         const collection = this.getCollection(namespace);
 
         try {
             const result = await collection.replaceOne(filter, data, { upsert: true });
             const { upsertedCount, modifiedCount } = result;
             if (notify && (upsertedCount > 0 || modifiedCount > 0)) {
-                this.emit<"CONFIGURED">("CONFIGURED", type, data.gameConfigs.name, upsertedCount, modifiedCount);
+                this.emit<"CONFIGURED">("CONFIGURED", configType, data.gameConfigs.name, upsertedCount, modifiedCount, type);
             }
         } catch (error: unknown) {
-            this.logger.logError({ title: this.className, message: error }, { extra: { type, namespace, filter, data } });
+            this.logger.logError({ title: this.className, message: error }, { extra: { configType, namespace, filter, data, type } });
         }
     }
 
