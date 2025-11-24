@@ -21,8 +21,8 @@ importers:
         specifier: 0.3.5
         version: 0.3.5
       '@ldb/watcher':
-        specifier: 0.1.2-rc.8
-        version: 0.1.2-rc.8
+        specifier: 0.1.2
+        version: 0.1.2
       awilix:
         specifier: 12.0.5
         version: 12.0.5
@@ -477,8 +477,8 @@ packages:
       '@vitest/coverage-v8': ^3.0.0
       vitest: ^3.0.0
 
-  '@ldb/watcher@0.1.2-rc.8':
-    resolution: {integrity: sha512-UUYBMsxjFS5urv/8SyJLAG/Up3eAZrtZkwePDh9SXxId/BDiNg+0d25ZLV02LqFi2vlMG3+AGw1zgx62Lu9c7A==}
+  '@ldb/watcher@0.1.2':
+    resolution: {integrity: sha512-bInXs3N3fsqP0WkBj5XzL7pqn8lb+mweHC2qR2xVyGFpccthc+afOlvJkhsRrTEjZN1YBSLRTlpNjwYGw9Jy6w==}
 
   '@mongodb-js/saslprep@1.3.2':
     resolution: {integrity: sha512-QgA5AySqB27cGTXBFmnpifAi7HxoGUeezwo6p9dI03MuDB6Pp33zgclqVb6oVK3j6I9Vesg0+oojW2XxB59SGg==}
@@ -2467,7 +2467,7 @@ snapshots:
       '@vitest/coverage-v8': 3.0.9(vitest@3.0.9(@types/node@22.13.10)(jiti@2.6.1))
       vitest: 3.0.9(@types/node@22.13.10)(jiti@2.6.1)
 
-  '@ldb/watcher@0.1.2-rc.8':
+  '@ldb/watcher@0.1.2':
     dependencies:
       '@ldb/mongo': 6.10.5
       '@ldb/utils': 0.3.5
