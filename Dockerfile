@@ -1,4 +1,4 @@
-FROM hub.lumigame.com/ldb/node-base:22 AS base
+FROM hub.lumigame.com/ldb/node-base:24 AS base
 
 # Core CI/CD will cache `builder` stage
 FROM base AS builder
